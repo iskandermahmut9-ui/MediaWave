@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDIA WAVE | Airy Logo</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 1. ПЕРЕМЕННЫЕ --- */
+        :root {
+            --bg-body: #f4f4f7; 
+            --text-main: #1d1d1f;
+            --text-muted: rgba(29, 29, 31, 0.65);
+            --black-btn: #000000;
+            --accent: #007aff;
+            
+            /* СТЕКЛО */
+            --glass-bg: rgba(255, 255, 255, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.65);
+            --blur: 50px;
+            --radius: 40px;
+            
+            /* ОТСТУПЫ */
+            --section-padding: 160px;
+            --grid-gap: 50px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Manrope', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* --- 2. ЖИВОЙ ГРАДИЕНТ --- */
+        .blobs {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            overflow: hidden; pointer-events: none;
+        }
+        .blob {
+            position: absolute; border-radius: 50%;
+            filter: blur(90px); opacity: 0.85;
+            animation: float 20s infinite alternate;
+        }
+        .b1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #a8c0ff; }
+        .b2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: #ffc2d1; animation-delay: -5s; }
+        .b3 { top: 40%; left: 40%; width: 45vw; height: 45vw; background: #e0c3fc; animation-delay: -10s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(40px, -40px); }
+        }
+
+        /* --- 3. CLASS "GLASS" --- */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.03);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .glass:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* --- 4. ШАПКА (Header) --- */
+        header {
+            position: fixed; top: 25px; left: 0; width: 100%;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: flex-start;
+            z-index: 1000;
+            pointer-events: none; 
+        }
+
+        .header-item { pointer-events: auto; }
+
+        /* ЛОГОТИП (ИЗМЕНЕН) */
+        .logo-btn {
+            display: inline-flex; justify-content: center; align-items: center;
+            height: 60px; padding: 0 40px;
+            text-decoration: none; 
+            border-radius: 100px; white-space: nowrap;
+            
+            /* Новые стили для воздушности */
+            color: var(--text-main); /* Оставляем темным для контраста */
+            font-weight: 300; /* Самое тонкое начертание */
+            font-size: 1.3rem; /* Чуть крупнее */
+            letter-spacing: 3px; /* Много воздуха между буквами */
+            text-transform: uppercase; /* Премиальный вид */
+        }
+
+        /* Центр: Dynamic Island */
+        .notch-container { display: flex; justify-content: center; }
+        .notch-btn {
+            background: var(--black-btn); color: white;
+            height: 60px; padding: 0 50px; border-radius: 100px;
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; font-weight: 700; font-size: 1.1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        .notch-btn:hover { transform: scale(1.05); }
+
+        /* Меню справа */
+        .menu-container { display: flex; justify-content: flex-end; }
+        .menu-wrapper { position: relative; display: flex; flex-direction: column; align-items: flex-end; }
+        .menu-trigger {
+            width: 60px; height: 60px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2;
+        }
+        .menu-icon span {
+            display: block; width: 24px; height: 2px; background: var(--text-main);
+            margin: 5px 0; transition: 0.3s; border-radius: 2px;
+        }
+        .dropdown-panel {
+            position: absolute; top: 70px; right: 0; width: 260px; padding: 20px;
+            display: flex; flex-direction: column; gap: 8px; border-radius: 30px;
+            opacity: 0; visibility: hidden; transform: translateY(-20px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .menu-wrapper:hover .dropdown-panel { opacity: 1; visibility: visible; transform: translateY(0); }
+        .menu-wrapper:hover .menu-trigger span:first-child { transform: translateY(3px) rotate(45deg); }
+        .menu-wrapper:hover .menu-trigger span:last-child { transform: translateY(-4px) rotate(-45deg); }
+        .menu-link {
+            text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 1.1rem;
+            padding: 12px 20px; border-radius: 15px; transition: 0.2s;
+        }
+        .menu-link:hover { color: var(--text-main); background: rgba(255,255,255,0.4); }
+
+        /* --- 5. СТРУКТУРА СЕКЦИЙ --- */
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+        section { padding-top: var(--section-padding); padding-bottom: var(--section-padding); }
+
+        h1 { font-size: clamp(3.5rem, 6vw, 6.5rem); font-weight: 800; line-height: 1; margin-bottom: 30px; }
+        h2 { font-size: 3.5rem; margin-bottom: 80px; text-align: center; font-weight: 800; letter-spacing: -1px; }
+
+        /* HERO */
+        .hero { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; padding-top: 100px; }
+        .hero-card { padding: 70px; max-width: 950px; }
+
+        /* КЕЙСЫ */
+        .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gap); }
+        .service-card { padding: 60px; min-height: 450px; display: flex; flex-direction: column; justify-content: flex-end; }
+
+        /* КОМАНДА */
+        .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--grid-gap); }
+        .team-card { padding: 30px; text-align: center; display: flex; flex-direction: column; align-items: center;}
+        .photo { width: 100%; aspect-ratio: 1/1.25; border-radius: 30px; object-fit: cover; margin-bottom: 25px; background: rgba(0,0,0,0.05); }
+        .role { color: var(--accent); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
+        .name { font-size: 1.5rem; font-weight: 800; }
+
+        /* ТАРИФЫ */
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--grid-gap); }
+        .pricing-card { padding: 50px; display: flex; flex-direction: column; justify-content: space-between; min-height: 500px; }
+        .price-title { font-size: 1.5rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
+        .price-amount { font-size: 3.5rem; font-weight: 800; color: var(--text-main); line-height: 1; margin-bottom: 40px; }
+        .price-amount span { font-size: 1.5rem; color: var(--text-muted); font-weight: 500; }
+        .price-list { list-style: none; margin-bottom: 40px; }
+        .price-list li { font-size: 1.1rem; color: var(--text-main); margin-bottom: 15px; padding-left: 25px; position: relative; }
+        .price-list li::before { content: "•"; color: var(--accent); position: absolute; left: 0; font-weight: bold; }
+        .price-btn { display: block; text-align: center; padding: 18px; border-radius: 100px; text-decoration: none; font-weight: 700; background: rgba(0,0,0,0.05); color: var(--text-main); transition: 0.3s; }
+        .price-btn:hover { background: var(--black-btn); color: white; }
+
+        /* ФУТЕР */
+        footer { padding-bottom: 100px; text-align: center; }
+        .footer-nav { display: flex; justify-content: center; gap: 30px; margin-bottom: 50px; flex-wrap: wrap; }
+        .f-btn {
+            padding: 25px 60px; border-radius: 100px; text-decoration: none; color: var(--text-main);
+            font-weight: 700; font-size: 1.3rem; display: inline-flex; align-items: center; gap: 10px;
+            background: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(20px);
+            transition: 0.3s;
+        }
+        .f-btn:hover { background: white; transform: scale(1.05); }
+
+        /* АДАПТИВ */
+        @media (max-width: 1200px) {
+            .team-grid { grid-template-columns: 1fr 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; }
+            .pricing-card { min-height: auto; }
+            .logo-btn { padding: 0 30px; }
+        }
+        @media (max-width: 768px) {
+            .services-grid { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: 1fr; }
+            header { padding: 0 20px; }
+            .logo-btn, .notch-btn { height: 50px; padding: 0 20px; font-size: 0.9rem; }
+            .menu-trigger { width: 50px; height: 50px; }
+            :root { --section-padding: 100px; }
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2.5rem; }
+            .f-btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blobs">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="blob b3"></div>
+    </div>
+
+    <header>
+        <div class="header-item">
+            <a href="#" class="glass logo-btn">MEDIA WAVE</a>
+        </div>
+        <div class="header-item notch-container">
+            <a href="#pricing" class="notch-btn">ВЫБРАТЬ ТАРИФ</a>
+        </div>
+        <div class="header-item menu-container">
+            <div class="menu-wrapper">
+                <div class="glass menu-trigger">
+                    <div class="menu-icon"><span></span><span></span></div>
+                </div>
+                <nav class="glass dropdown-panel">
+                    <a href="#cases" class="menu-link">Кейсы</a>
+                    <a href="#team" class="menu-link">Команда</a>
+                    <a href="#pricing" class="menu-link">Цены</a>
+                    <a href="#contacts" class="menu-link">Контакты</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero container">
+        <div class="glass hero-card">
+            <h1>Управляем<br>Вниманием.</h1>
+            <p style="font-size: 1.4rem; color: var(--text-muted); font-weight: 500;">
+                SMM агентство нового формата. Никакого хаоса — только чистая стратегия и эстетика, которая работает на ваш бренд.
+            </p>
+        </div>
+    </section>
+
+    <section id="cases" class="container">
+        <h2>Наш подход</h2>
+        <div class="services-grid">
+            <div class="glass service-card">
+                <h3 style="font-size: 2.2rem; margin-bottom: 15px; font-weight:800;">SMM 360°</h3>
+                <p style="font-size: 1.1rem; color: var(--text-muted);">
+                    Полное погружение в бизнес. Мы становимся частью вашей команды, берем на себя контент, аналитику и продажи через соцсети.
+                </p>
+            </div>
+            <div class="glass service-card">
+                <h3 style="font-size: 2.2rem; margin-bottom: 15px; font-weight:800;">Visual Production</h3>
+                <p style="font-size: 1.1rem; color: var(--text-muted);">
+                    Создаем контент, который хочется сохранить. Профессиональная съемка, монтаж Reels и моушн-дизайн.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="container">
+        <h2>Команда</h2>
+        <div class="team-grid">
+            <div class="glass team-card">
+                <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=600&q=80" class="photo" alt="Img">
+                <div class="role">Founder</div>
+                <div class="name">Alex</div>
+            </div>
+            <div class="glass team-card">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" class="photo" alt="Img">
+                <div class="role">Creator</div>
+                <div class="name">Maria</div>
+            </div>
+            <div class="glass team-card">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80" class="photo" alt="Img">
+                <div class="role">Copywriter</div>
+                <div class="name">Max</div>
+            </div>
+            <div class="glass team-card">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" class="photo" alt="Img">
+                <div class="role">Target</div>
+                <div class="name">Elena</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="container">
+        <h2>Тарифы</h2>
+        <div class="pricing-grid">
+            
+            <div class="glass pricing-card">
+                <div>
+                    <div class="price-title">Start</div>
+                    <div class="price-amount">60к <span>/ мес</span></div>
+                    <ul class="price-list">
+                        <li>Стратегия продвижения</li>
+                        <li>15 постов (Копирайтинг)</li>
+                        <li>Монтаж 4 Reels</li>
+                        <li>Оформление Stories</li>
+                    </ul>
+                </div>
+                <a href="#contacts" class="price-btn">Выбрать</a>
+            </div>
+
+            <div class="glass pricing-card">
+                <div>
+                    <div class="price-title" style="color: var(--accent);">Business</div>
+                    <div class="price-amount">90к <span>/ мес</span></div>
+                    <ul class="price-list">
+                        <li>Всё из тарифа Start</li>
+                        <li>Выездная съемка (2 раза)</li>
+                        <li>Таргетированная реклама</li>
+                        <li>Работа с блогерами</li>
+                        <li>Комьюнити-менеджмент</li>
+                    </ul>
+                </div>
+                <a href="#contacts" class="price-btn" style="background: var(--black-btn); color: white;">Выбрать</a>
+            </div>
+
+            <div class="glass pricing-card">
+                <div>
+                    <div class="price-title">Premium</div>
+                    <div class="price-amount">150к <span>/ мес</span></div>
+                    <ul class="price-list">
+                        <li>Полный продакшн</li>
+                        <li>Сценарии прогревов</li>
+                        <li>Motion-дизайн</li>
+                        <li>Аналитика и отчетность</li>
+                        <li>Личный менеджер 24/7</li>
+                    </ul>
+                </div>
+                <a href="#contacts" class="price-btn">Выбрать</a>
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="contacts" class="container">
+        <h2 style="margin-bottom: 60px;">Связаться с нами</h2>
+        <div class="footer-nav">
+            <a href="#" class="f-btn">Telegram</a>
+            <a href="#" class="f-btn">WhatsApp</a>
+            <a href="#" class="f-btn">Email</a>
+        </div>
+        <div style="color: var(--text-muted);">© 2025 Media Wave. All rights reserved.</div>
+    </footer>
+
+</body>
+</html>
