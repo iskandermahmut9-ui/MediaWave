@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEDIA WAVE | Vertical Mobile</title>
+    <title>MEDIA WAVE | Final</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,18 +70,17 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.03);
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        .glass:hover {
+        .hover-effect:hover {
             transform: translateY(-8px);
             box-shadow: 0 30px 60px rgba(0,0,0,0.08);
             background: rgba(255, 255, 255, 0.5);
         }
 
-        /* --- 4. ШАПКА (HEADER) --- */
+        /* --- 4. ШАПКА --- */
         header {
             position: fixed; top: 25px; left: 0; width: 100%;
             padding: 0 40px;
             display: grid;
-            /* Сетка 1fr - auto - 1fr гарантирует центр */
             grid-template-columns: 1fr auto 1fr;
             align-items: flex-start;
             z-index: 1000;
@@ -90,23 +89,16 @@
 
         .header-item { pointer-events: auto; }
 
-        /* ЛОГОТИП */
         .logo-btn {
             display: inline-flex; justify-content: center; align-items: center;
             height: 60px; padding: 0 40px;
-            text-decoration: none; 
-            border-radius: 100px; white-space: nowrap;
+            text-decoration: none; border-radius: 100px; white-space: nowrap;
             color: var(--text-main); font-weight: 300; font-size: 1.3rem; 
             letter-spacing: 3px; text-transform: uppercase;
             transition: all 0.4s ease;
         }
-        
-        /* Скрытые части букв для анимации */
-        .logo-part-hidden {
-            display: inline-block;
-        }
+        .logo-part-hidden { display: inline-block; }
 
-        /* ЦЕНТР: Dynamic Island */
         .notch-container { display: flex; justify-content: center; }
         .notch-btn {
             background: var(--black-btn); color: white;
@@ -119,67 +111,81 @@
         }
         .notch-btn:hover { transform: scale(1.05); }
 
-        /* МЕНЮ СПРАВА */
         .menu-container { display: flex; justify-content: flex-end; }
         .menu-wrapper { position: relative; display: flex; flex-direction: column; align-items: flex-end; }
+        
         .menu-trigger {
             width: 60px; height: 60px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2;
         }
+        
+        .menu-icon { position: relative; width: 24px; height: 24px; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
         .menu-icon span {
-            display: block; width: 24px; height: 2px; background: var(--text-main);
-            margin: 5px 0; transition: 0.3s; border-radius: 2px;
+            display: block; width: 100%; height: 2px; background: var(--text-main);
+            border-radius: 2px; transition: all 0.3s ease; position: absolute;
         }
+        .menu-icon span:nth-child(1) { top: 8px; }
+        .menu-icon span:nth-child(2) { bottom: 8px; }
+
+        .menu-wrapper.active .menu-icon span:nth-child(1) {
+            top: 50%; transform: translateY(-50%) rotate(45deg);
+        }
+        .menu-wrapper.active .menu-icon span:nth-child(2) {
+            bottom: 50%; transform: translateY(50%) rotate(-45deg);
+        }
+
         .dropdown-panel {
             position: absolute; top: 70px; right: 0; width: 260px; padding: 20px;
             display: flex; flex-direction: column; gap: 8px; border-radius: 30px;
             opacity: 0; visibility: hidden; transform: translateY(-20px);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .menu-wrapper:hover .dropdown-panel { opacity: 1; visibility: visible; transform: translateY(0); }
-        .menu-wrapper:hover .menu-trigger span:first-child { transform: translateY(3px) rotate(45deg); }
-        .menu-wrapper:hover .menu-trigger span:last-child { transform: translateY(-4px) rotate(-45deg); }
+        .menu-wrapper.active .dropdown-panel { opacity: 1; visibility: visible; transform: translateY(0); }
+
         .menu-link {
             text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 1.1rem;
             padding: 12px 20px; border-radius: 15px; transition: 0.2s;
         }
         .menu-link:hover { color: var(--text-main); background: rgba(255,255,255,0.4); }
 
-        /* --- 5. СТРУКТУРА СЕКЦИЙ --- */
+        /* --- 5. СТРУКТУРА --- */
         .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
         section { padding-top: var(--section-padding); padding-bottom: var(--section-padding); }
 
-        h1 { font-size: clamp(3.5rem, 6vw, 6.5rem); font-weight: 800; line-height: 1; margin-bottom: 30px; }
+        /* HERO */
+        .hero { 
+            height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; 
+            padding: 0; 
+        }
+        .hero-card { 
+            width: 100%; height: 85vh; margin-top: 20px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 40px;
+        }
+
+        h1 { font-size: clamp(3.5rem, 6vw, 6.5rem); font-weight: 800; line-height: 1; margin-bottom: 40px; }
         h2 { font-size: 3.5rem; margin-bottom: 80px; text-align: center; font-weight: 800; letter-spacing: -1px; }
 
-        /* HERO */
-        .hero { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; padding-top: 100px; }
-        .hero-card { padding: 70px; max-width: 950px; }
-
-        /* КЕЙСЫ */
+        /* СЕТКИ */
         .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gap); }
         .service-card { padding: 60px; min-height: 450px; display: flex; flex-direction: column; justify-content: flex-end; }
-
-        /* КОМАНДА */
         .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--grid-gap); }
         .team-card { padding: 30px; text-align: center; display: flex; flex-direction: column; align-items: center;}
         .photo { width: 100%; aspect-ratio: 1/1.25; border-radius: 30px; object-fit: cover; margin-bottom: 25px; background: rgba(0,0,0,0.05); }
         .role { color: var(--accent); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
         .name { font-size: 1.5rem; font-weight: 800; }
-
-        /* ТАРИФЫ */
         .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--grid-gap); }
         .pricing-card { padding: 50px; display: flex; flex-direction: column; justify-content: space-between; min-height: 500px; }
         .price-title { font-size: 1.5rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
         .price-amount { font-size: 3.5rem; font-weight: 800; color: var(--text-main); line-height: 1; margin-bottom: 40px; }
         .price-amount span { font-size: 1.5rem; color: var(--text-muted); font-weight: 500; }
-        .price-list { list-style: none; margin-bottom: 40px; }
+        .price-list { list-style: none; margin-bottom: 40px; text-align: left;}
         .price-list li { font-size: 1.1rem; color: var(--text-main); margin-bottom: 15px; padding-left: 25px; position: relative; }
         .price-list li::before { content: "•"; color: var(--accent); position: absolute; left: 0; font-weight: bold; }
         .price-btn { display: block; text-align: center; padding: 18px; border-radius: 100px; text-decoration: none; font-weight: 700; background: rgba(0,0,0,0.05); color: var(--text-main); transition: 0.3s; }
         .price-btn:hover { background: var(--black-btn); color: white; }
 
-        /* ФУТЕР */
         footer { padding-bottom: 100px; text-align: center; }
         .footer-nav { display: flex; justify-content: center; gap: 30px; margin-bottom: 50px; flex-wrap: wrap; }
         .f-btn {
@@ -190,9 +196,7 @@
         }
         .f-btn:hover { background: white; transform: scale(1.05); }
 
-        /* --- 6. МОБИЛЬНАЯ АДАПТАЦИЯ (Сложная) --- */
-        
-        /* Логика отображения логотипа: Скрываем вертикальные блоки на ПК */
+        /* --- 6. МОБИЛЬНАЯ ВЕРСИЯ --- */
         .logo-box-mobile { display: none; } 
 
         @media (max-width: 1200px) {
@@ -203,81 +207,44 @@
         }
 
         @media (max-width: 768px) {
+            .blob { filter: blur(60px); opacity: 0.9; }
+            .b1 { top: -5%; left: -20%; width: 90vw; height: 90vw; }
+            .b2 { bottom: -5%; right: -20%; width: 90vw; height: 90vw; }
+            .b3 { top: 40%; left: 5%; width: 90vw; height: 90vw; }
+
             header { padding: 0 15px; top: 15px; }
-
-            /* 1. СЕТКА ШАПКИ ДЛЯ МОБИЛЬНЫХ */
-            /* Нам нужно, чтобы notch был по центру, а логотип и меню по краям не мешали ему */
-            
-            /* 2. ЛОГОТИП (Вертикальная анимация) */
-            /* Скрываем обычный текст */
             .logo-text-desktop { display: none; }
-            
-            /* Включаем мобильный контейнер */
-            .logo-box-mobile { 
-                display: flex; 
-                flex-direction: column; 
-                align-items: center;
-                gap: 2px;
-            }
-
+            .logo-box-mobile { display: flex; flex-direction: column; align-items: center; gap: 2px; }
             .logo-btn { 
-                width: 50px; /* Узкая кнопка */
-                height: auto;
-                min-height: 60px; 
-                padding: 15px 0; 
-                flex-direction: column;
-                font-size: 0.9rem;
-                letter-spacing: 0;
-                font-weight: 700;
-                line-height: 1;
-                /* Начальное состояние: только M и W */
+                width: 50px; min-height: 60px; padding: 15px 0; 
+                flex-direction: column; font-size: 0.9rem; letter-spacing: 0; font-weight: 700; line-height: 1;
                 overflow: hidden;
             }
-
-            /* Скрытые части слова */
             .word-expand {
-                max-height: 0;
-                opacity: 0;
-                overflow: hidden;
-                transition: all 0.5s ease;
-                font-size: 0.8rem; /* Чуть меньше шрифт внутри */
-                font-weight: 400;
-                text-transform: lowercase;
+                max-height: 0; opacity: 0; overflow: hidden; transition: all 0.5s ease;
+                font-size: 0.8rem; font-weight: 400; text-transform: lowercase;
             }
-
-            /* При наведении/клике раскрываем */
-            .logo-btn:hover .word-expand,
-            .logo-btn:active .word-expand {
-                max-height: 100px;
-                opacity: 1;
-                margin: 5px 0; /* Отступ при раскрытии */
+            .logo-btn:hover .word-expand, .logo-btn:active .word-expand {
+                max-height: 100px; opacity: 1; margin: 5px 0;
             }
-
-            /* 3. NOTCH (Челка) */
-            .notch-btn { 
-                height: 50px; 
-                padding: 0 25px; 
-                font-size: 0.85rem; 
-            }
-
-            /* 4. МЕНЮ */
+            .notch-btn { height: 50px; padding: 0 25px; font-size: 0.85rem; }
             .menu-trigger { width: 50px; height: 50px; }
             .dropdown-panel { width: 200px; }
 
-            /* 5. ИСПРАВЛЕНИЕ ГЛАВНОГО ЭКРАНА (HERO) */
-            :root { --section-padding: 120px; } /* Уменьшаем отступы секций */
-            .container { padding: 0 20px; }
-            .hero-card { padding: 40px 25px; } /* Меньше паддинг внутри стекла */
+            :root { --section-padding: 120px; }
+            
+            .container { padding: 0 15px; }
+            .hero { padding: 0; }
+            .hero-card { 
+                height: 85vh; padding: 20px; justify-content: center; width: 100%;
+            }
             
             h1 { 
-                font-size: 2.2rem; /* Уменьшаем шрифт заголовка */
-                line-height: 1.1;
-                word-wrap: break-word; /* Перенос слов */
-                hyphens: auto; 
-                margin-bottom: 20px;
+                font-size: 2.2rem; line-height: 1.1; 
+                word-wrap: break-word; hyphens: auto; 
+                margin-bottom: 30px;
             }
 
-            /* Остальные сетки в 1 колонку */
             .services-grid, .team-grid { grid-template-columns: 1fr; }
             .f-btn { width: 100%; justify-content: center; }
             h2 { font-size: 2.2rem; }
@@ -294,31 +261,27 @@
 
     <header>
         <div class="header-item">
-            <a href="#" class="glass logo-btn">
-                
+            <a href="#" class="glass logo-btn hover-effect">
                 <span class="logo-text-desktop">MEDIA WAVE</span>
-
                 <div class="logo-box-mobile">
-                    <span>M</span>
-                    <span class="word-expand">edia</span>
-                    <span>W</span>
-                    <span class="word-expand">ave</span>
+                    <span>M</span><span class="word-expand">edia</span>
+                    <span>W</span><span class="word-expand">ave</span>
                 </div>
-
             </a>
         </div>
-
         <div class="header-item notch-container">
             <a href="#pricing" class="notch-btn">
                 <span class="logo-text-desktop">ВЫБРАТЬ ТАРИФ</span>
                 <span class="logo-box-mobile" style="display:inline;">ТАРИФЫ</span>
             </a>
         </div>
-
         <div class="header-item menu-container">
-            <div class="menu-wrapper">
-                <div class="glass menu-trigger">
-                    <div class="menu-icon"><span></span><span></span></div>
+            <div class="menu-wrapper" id="menuWrapper">
+                <div class="glass menu-trigger" id="menuBtn">
+                    <div class="menu-icon">
+                        <span></span>
+                        <span></span>
+                    </div>
                 </div>
                 <nav class="glass dropdown-panel">
                     <a href="#cases" class="menu-link">Кейсы</a>
@@ -342,13 +305,13 @@
     <section id="cases" class="container">
         <h2>Наш подход</h2>
         <div class="services-grid">
-            <div class="glass service-card">
+            <div class="glass service-card hover-effect">
                 <h3 style="font-size: 2rem; margin-bottom: 15px; font-weight:800;">SMM 360°</h3>
                 <p style="font-size: 1.1rem; color: var(--text-muted);">
                     Полное погружение в бизнес. Мы становимся частью вашей команды, берем на себя контент, аналитику и продажи.
                 </p>
             </div>
-            <div class="glass service-card">
+            <div class="glass service-card hover-effect">
                 <h3 style="font-size: 2rem; margin-bottom: 15px; font-weight:800;">Production</h3>
                 <p style="font-size: 1.1rem; color: var(--text-muted);">
                     Создаем контент, который хочется сохранить. Профессиональная съемка, монтаж Reels и моушн-дизайн.
@@ -360,22 +323,22 @@
     <section id="team" class="container">
         <h2>Команда</h2>
         <div class="team-grid">
-            <div class="glass team-card">
+            <div class="glass team-card hover-effect">
                 <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=600&q=80" class="photo" alt="Img">
                 <div class="role">Founder</div>
                 <div class="name">Alex</div>
             </div>
-            <div class="glass team-card">
+            <div class="glass team-card hover-effect">
                 <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" class="photo" alt="Img">
                 <div class="role">Creator</div>
                 <div class="name">Maria</div>
             </div>
-            <div class="glass team-card">
+            <div class="glass team-card hover-effect">
                 <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80" class="photo" alt="Img">
                 <div class="role">Copywriter</div>
                 <div class="name">Max</div>
             </div>
-            <div class="glass team-card">
+            <div class="glass team-card hover-effect">
                 <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" class="photo" alt="Img">
                 <div class="role">Target</div>
                 <div class="name">Elena</div>
@@ -386,51 +349,44 @@
     <section id="pricing" class="container">
         <h2>Тарифы</h2>
         <div class="pricing-grid">
-            
-            <div class="glass pricing-card">
+            <div class="glass pricing-card hover-effect">
                 <div>
                     <div class="price-title">Start</div>
                     <div class="price-amount">60к <span>/ мес</span></div>
                     <ul class="price-list">
                         <li>Стратегия продвижения</li>
-                        <li>15 постов (Копирайтинг)</li>
+                        <li>15 постов</li>
                         <li>Монтаж 4 Reels</li>
-                        <li>Оформление Stories</li>
                     </ul>
                 </div>
                 <a href="#contacts" class="price-btn">Выбрать</a>
             </div>
-
-            <div class="glass pricing-card">
+            <div class="glass pricing-card hover-effect">
                 <div>
                     <div class="price-title" style="color: var(--accent);">Business</div>
                     <div class="price-amount">90к <span>/ мес</span></div>
                     <ul class="price-list">
                         <li>Всё из тарифа Start</li>
-                        <li>Выездная съемка (2 раза)</li>
-                        <li>Таргетированная реклама</li>
-                        <li>Работа с блогерами</li>
-                        <li>Комьюнити-менеджмент</li>
+                        <li>Выездная съемка</li>
+                        <li>Таргетинг</li>
+                        <li>Блогеры</li>
                     </ul>
                 </div>
                 <a href="#contacts" class="price-btn" style="background: var(--black-btn); color: white;">Выбрать</a>
             </div>
-
-            <div class="glass pricing-card">
+            <div class="glass pricing-card hover-effect">
                 <div>
                     <div class="price-title">Premium</div>
                     <div class="price-amount">150к <span>/ мес</span></div>
                     <ul class="price-list">
                         <li>Полный продакшн</li>
-                        <li>Сценарии прогревов</li>
+                        <li>Сценарии</li>
                         <li>Motion-дизайн</li>
-                        <li>Аналитика и отчетность</li>
-                        <li>Личный менеджер 24/7</li>
+                        <li>Аналитика</li>
                     </ul>
                 </div>
                 <a href="#contacts" class="price-btn">Выбрать</a>
             </div>
-
         </div>
     </section>
 
@@ -441,8 +397,33 @@
             <a href="#" class="f-btn">WhatsApp</a>
             <a href="#" class="f-btn">Email</a>
         </div>
-        <div style="color: var(--text-muted);">© 2025 Media Wave. All rights reserved.</div>
+        <div style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+            © 2025 by AL☰X<br>
+            Все права защищены.
+        </div>
     </footer>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const menuWrapper = document.getElementById('menuWrapper');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        menuBtn.addEventListener('click', () => {
+            menuWrapper.classList.toggle('active');
+        });
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuWrapper.classList.remove('active');
+            });
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!menuWrapper.contains(e.target) && !menuBtn.contains(e.target)) {
+                menuWrapper.classList.remove('active');
+            }
+        });
+    </script>
 
 </body>
 </html>
