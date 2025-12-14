@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEDIA WAVE | Final Content</title>
+    <title>MEDIA WAVE | Static Vertical</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -99,11 +99,10 @@
             transition: all 0.4s ease;
         }
         
-        /* Скрываем мобильные элементы по умолчанию */
-        .logo-box-mobile { display: none; }
-        .logo-text-desktop { display: inline; }
+        .pc-only { display: inline-block; }
+        .mob-only { display: none; }
 
-        /* Челка (Кнопка) */
+        /* Челка */
         .notch-container { display: flex; justify-content: center; }
         .notch-btn {
             background: var(--black-btn); color: white;
@@ -115,10 +114,6 @@
             white-space: nowrap;
         }
         .notch-btn:hover { transform: scale(1.05); }
-
-        /* Тексты внутри кнопки */
-        .btn-text-pc { display: inline-block; }
-        .btn-text-mob { display: none; }
 
         /* Меню */
         .menu-container { display: flex; justify-content: flex-end; }
@@ -162,7 +157,7 @@
         .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
         section { padding-top: var(--section-padding); padding-bottom: var(--section-padding); }
 
-        /* HERO (ПК) */
+        /* HERO (ПК - маленький, слева) */
         .hero { 
             min-height: 90vh; 
             display: flex; 
@@ -189,20 +184,10 @@
         .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--grid-gap); }
         .team-card { padding: 30px; text-align: center; display: flex; flex-direction: column; align-items: center;}
         
-        /* Заглушка для фото */
         .photo-placeholder { 
-            width: 100%; 
-            aspect-ratio: 1/1.25; 
-            border-radius: 30px; 
-            margin-bottom: 25px; 
-            background: rgba(0,0,0,0.06); /* Серый фон */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(0,0,0,0.1);
-            font-size: 3rem;
+            width: 100%; aspect-ratio: 1/1.25; border-radius: 30px; margin-bottom: 25px; 
+            background: rgba(0,0,0,0.06); 
         }
-
         .role { color: var(--accent); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; }
         .name { font-size: 1.4rem; font-weight: 800; }
         
@@ -242,33 +227,37 @@
             .b3 { top: 40%; left: 5%; width: 90vw; height: 90vw; }
 
             header { padding: 0 15px; top: 15px; }
+
+            /* Управление видимостью текста */
+            .pc-only { display: none !important; }
+            .mob-only { display: flex !important; }
             
-            /* Логотип */
-            .logo-text-desktop { display: none; }
-            .logo-box-mobile { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+            /* --- ВЕРТИКАЛЬНЫЙ ЛОГОТИП (СТАТИЧНЫЙ) --- */
             .logo-btn { 
-                width: 50px; min-height: 60px; padding: 15px 0; 
-                flex-direction: column; font-size: 0.9rem; letter-spacing: 0; font-weight: 700; line-height: 1;
-                overflow: hidden;
+                width: 50px; 
+                height: auto; /* Позволяем расти вниз */
+                padding: 20px 0; 
+                flex-direction: column; /* Элементы в колонку */
+                gap: 10px; /* Отступ между MEDIA и WAVE */
             }
-            .word-expand {
-                max-height: 0; opacity: 0; overflow: hidden; transition: all 0.5s ease;
-                font-size: 0.8rem; font-weight: 400; text-transform: lowercase;
-            }
-            .logo-btn:hover .word-expand, .logo-btn:active .word-expand {
-                max-height: 100px; opacity: 1; margin: 5px 0;
+            
+            /* Блок с вертикальным текстом (M E D I A) */
+            .vertical-word {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 2px; /* Расстояние между буквами */
+                font-weight: 700;
+                font-size: 0.8rem;
+                line-height: 1;
             }
 
-            /* Кнопка Тарифы (Смена текста) */
-            .btn-text-pc { display: none; }
-            .btn-text-mob { display: inline-block; }
-            
+            /* Челка */
             .notch-btn { height: 50px; padding: 0 25px; font-size: 0.85rem; }
             .menu-trigger { width: 50px; height: 50px; }
             .dropdown-panel { width: 200px; }
 
             :root { --section-padding: 120px; }
-            
             .container { padding: 0 15px; }
             
             /* HERO ДЛЯ МОБИЛЬНОГО (По центру, узкая) */
@@ -285,6 +274,7 @@
                 width: 100%;
                 text-align: center; 
                 align-items: center;
+                justify-content: center;
             }
             
             h1 { 
@@ -310,19 +300,29 @@
     <header>
         <div class="header-item">
             <a href="#" class="glass logo-btn hover-effect">
-                <span class="logo-text-desktop">MEDIA WAVE</span>
-                <div class="logo-box-mobile">
-                    <span>M</span><span class="word-expand">edia</span>
-                    <span>W</span><span class="word-expand">ave</span>
+                
+                <span class="pc-only">MEDIA WAVE</span>
+
+                <div class="mob-only">
+                    <div class="vertical-word">
+                        <span>M</span><span>E</span><span>D</span><span>I</span><span>A</span>
+                    </div>
+                    
+                    <div class="vertical-word">
+                        <span>W</span><span>A</span><span>V</span><span>E</span>
+                    </div>
                 </div>
+
             </a>
         </div>
+        
         <div class="header-item notch-container">
             <a href="#pricing" class="notch-btn">
-                <span class="btn-text-pc">ВЫБРАТЬ ТАРИФ</span>
-                <span class="btn-text-mob">ТАРИФЫ</span>
+                <span class="pc-only">ВЫБРАТЬ ТАРИФ</span>
+                <span class="mob-only">ТАРИФЫ</span>
             </a>
         </div>
+        
         <div class="header-item menu-container">
             <div class="menu-wrapper" id="menuWrapper">
                 <div class="glass menu-trigger" id="menuBtn">
