@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEDIA WAVE | Airy Logo</title>
+    <title>MEDIA WAVE | Vertical Mobile</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +41,7 @@
             line-height: 1.5;
         }
 
-        /* --- 2. ЖИВОЙ ГРАДИЕНТ --- */
+        /* --- 2. ФОН --- */
         .blobs {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
             overflow: hidden; pointer-events: none;
@@ -76,11 +76,12 @@
             background: rgba(255, 255, 255, 0.5);
         }
 
-        /* --- 4. ШАПКА (Header) --- */
+        /* --- 4. ШАПКА (HEADER) --- */
         header {
             position: fixed; top: 25px; left: 0; width: 100%;
             padding: 0 40px;
             display: grid;
+            /* Сетка 1fr - auto - 1fr гарантирует центр */
             grid-template-columns: 1fr auto 1fr;
             align-items: flex-start;
             z-index: 1000;
@@ -89,22 +90,23 @@
 
         .header-item { pointer-events: auto; }
 
-        /* ЛОГОТИП (ИЗМЕНЕН) */
+        /* ЛОГОТИП */
         .logo-btn {
             display: inline-flex; justify-content: center; align-items: center;
             height: 60px; padding: 0 40px;
             text-decoration: none; 
             border-radius: 100px; white-space: nowrap;
-            
-            /* Новые стили для воздушности */
-            color: var(--text-main); /* Оставляем темным для контраста */
-            font-weight: 300; /* Самое тонкое начертание */
-            font-size: 1.3rem; /* Чуть крупнее */
-            letter-spacing: 3px; /* Много воздуха между буквами */
-            text-transform: uppercase; /* Премиальный вид */
+            color: var(--text-main); font-weight: 300; font-size: 1.3rem; 
+            letter-spacing: 3px; text-transform: uppercase;
+            transition: all 0.4s ease;
+        }
+        
+        /* Скрытые части букв для анимации */
+        .logo-part-hidden {
+            display: inline-block;
         }
 
-        /* Центр: Dynamic Island */
+        /* ЦЕНТР: Dynamic Island */
         .notch-container { display: flex; justify-content: center; }
         .notch-btn {
             background: var(--black-btn); color: white;
@@ -113,10 +115,11 @@
             text-decoration: none; font-weight: 700; font-size: 1.1rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             transition: transform 0.3s;
+            white-space: nowrap;
         }
         .notch-btn:hover { transform: scale(1.05); }
 
-        /* Меню справа */
+        /* МЕНЮ СПРАВА */
         .menu-container { display: flex; justify-content: flex-end; }
         .menu-wrapper { position: relative; display: flex; flex-direction: column; align-items: flex-end; }
         .menu-trigger {
@@ -187,23 +190,97 @@
         }
         .f-btn:hover { background: white; transform: scale(1.05); }
 
-        /* АДАПТИВ */
+        /* --- 6. МОБИЛЬНАЯ АДАПТАЦИЯ (Сложная) --- */
+        
+        /* Логика отображения логотипа: Скрываем вертикальные блоки на ПК */
+        .logo-box-mobile { display: none; } 
+
         @media (max-width: 1200px) {
             .team-grid { grid-template-columns: 1fr 1fr; }
             .pricing-grid { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; }
             .pricing-card { min-height: auto; }
             .logo-btn { padding: 0 30px; }
         }
+
         @media (max-width: 768px) {
-            .services-grid { grid-template-columns: 1fr; }
-            .team-grid { grid-template-columns: 1fr; }
-            header { padding: 0 20px; }
-            .logo-btn, .notch-btn { height: 50px; padding: 0 20px; font-size: 0.9rem; }
+            header { padding: 0 15px; top: 15px; }
+
+            /* 1. СЕТКА ШАПКИ ДЛЯ МОБИЛЬНЫХ */
+            /* Нам нужно, чтобы notch был по центру, а логотип и меню по краям не мешали ему */
+            
+            /* 2. ЛОГОТИП (Вертикальная анимация) */
+            /* Скрываем обычный текст */
+            .logo-text-desktop { display: none; }
+            
+            /* Включаем мобильный контейнер */
+            .logo-box-mobile { 
+                display: flex; 
+                flex-direction: column; 
+                align-items: center;
+                gap: 2px;
+            }
+
+            .logo-btn { 
+                width: 50px; /* Узкая кнопка */
+                height: auto;
+                min-height: 60px; 
+                padding: 15px 0; 
+                flex-direction: column;
+                font-size: 0.9rem;
+                letter-spacing: 0;
+                font-weight: 700;
+                line-height: 1;
+                /* Начальное состояние: только M и W */
+                overflow: hidden;
+            }
+
+            /* Скрытые части слова */
+            .word-expand {
+                max-height: 0;
+                opacity: 0;
+                overflow: hidden;
+                transition: all 0.5s ease;
+                font-size: 0.8rem; /* Чуть меньше шрифт внутри */
+                font-weight: 400;
+                text-transform: lowercase;
+            }
+
+            /* При наведении/клике раскрываем */
+            .logo-btn:hover .word-expand,
+            .logo-btn:active .word-expand {
+                max-height: 100px;
+                opacity: 1;
+                margin: 5px 0; /* Отступ при раскрытии */
+            }
+
+            /* 3. NOTCH (Челка) */
+            .notch-btn { 
+                height: 50px; 
+                padding: 0 25px; 
+                font-size: 0.85rem; 
+            }
+
+            /* 4. МЕНЮ */
             .menu-trigger { width: 50px; height: 50px; }
-            :root { --section-padding: 100px; }
-            h1 { font-size: 3rem; }
-            h2 { font-size: 2.5rem; }
+            .dropdown-panel { width: 200px; }
+
+            /* 5. ИСПРАВЛЕНИЕ ГЛАВНОГО ЭКРАНА (HERO) */
+            :root { --section-padding: 120px; } /* Уменьшаем отступы секций */
+            .container { padding: 0 20px; }
+            .hero-card { padding: 40px 25px; } /* Меньше паддинг внутри стекла */
+            
+            h1 { 
+                font-size: 2.2rem; /* Уменьшаем шрифт заголовка */
+                line-height: 1.1;
+                word-wrap: break-word; /* Перенос слов */
+                hyphens: auto; 
+                margin-bottom: 20px;
+            }
+
+            /* Остальные сетки в 1 колонку */
+            .services-grid, .team-grid { grid-template-columns: 1fr; }
             .f-btn { width: 100%; justify-content: center; }
+            h2 { font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -217,11 +294,27 @@
 
     <header>
         <div class="header-item">
-            <a href="#" class="glass logo-btn">MEDIA WAVE</a>
+            <a href="#" class="glass logo-btn">
+                
+                <span class="logo-text-desktop">MEDIA WAVE</span>
+
+                <div class="logo-box-mobile">
+                    <span>M</span>
+                    <span class="word-expand">edia</span>
+                    <span>W</span>
+                    <span class="word-expand">ave</span>
+                </div>
+
+            </a>
         </div>
+
         <div class="header-item notch-container">
-            <a href="#pricing" class="notch-btn">ВЫБРАТЬ ТАРИФ</a>
+            <a href="#pricing" class="notch-btn">
+                <span class="logo-text-desktop">ВЫБРАТЬ ТАРИФ</span>
+                <span class="logo-box-mobile" style="display:inline;">ТАРИФЫ</span>
+            </a>
         </div>
+
         <div class="header-item menu-container">
             <div class="menu-wrapper">
                 <div class="glass menu-trigger">
@@ -240,7 +333,7 @@
     <section class="hero container">
         <div class="glass hero-card">
             <h1>Управляем<br>Вниманием.</h1>
-            <p style="font-size: 1.4rem; color: var(--text-muted); font-weight: 500;">
+            <p style="font-size: 1.2rem; color: var(--text-muted); font-weight: 500; max-width: 600px;">
                 SMM агентство нового формата. Никакого хаоса — только чистая стратегия и эстетика, которая работает на ваш бренд.
             </p>
         </div>
@@ -250,13 +343,13 @@
         <h2>Наш подход</h2>
         <div class="services-grid">
             <div class="glass service-card">
-                <h3 style="font-size: 2.2rem; margin-bottom: 15px; font-weight:800;">SMM 360°</h3>
+                <h3 style="font-size: 2rem; margin-bottom: 15px; font-weight:800;">SMM 360°</h3>
                 <p style="font-size: 1.1rem; color: var(--text-muted);">
-                    Полное погружение в бизнес. Мы становимся частью вашей команды, берем на себя контент, аналитику и продажи через соцсети.
+                    Полное погружение в бизнес. Мы становимся частью вашей команды, берем на себя контент, аналитику и продажи.
                 </p>
             </div>
             <div class="glass service-card">
-                <h3 style="font-size: 2.2rem; margin-bottom: 15px; font-weight:800;">Visual Production</h3>
+                <h3 style="font-size: 2rem; margin-bottom: 15px; font-weight:800;">Production</h3>
                 <p style="font-size: 1.1rem; color: var(--text-muted);">
                     Создаем контент, который хочется сохранить. Профессиональная съемка, монтаж Reels и моушн-дизайн.
                 </p>
