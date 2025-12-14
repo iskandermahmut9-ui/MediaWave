@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEDIA WAVE | Final Fixed</title>
+    <title>MEDIA WAVE | Final Content</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -103,7 +103,7 @@
         .logo-box-mobile { display: none; }
         .logo-text-desktop { display: inline; }
 
-        /* Челка */
+        /* Челка (Кнопка) */
         .notch-container { display: flex; justify-content: center; }
         .notch-btn {
             background: var(--black-btn); color: white;
@@ -115,6 +115,10 @@
             white-space: nowrap;
         }
         .notch-btn:hover { transform: scale(1.05); }
+
+        /* Тексты внутри кнопки */
+        .btn-text-pc { display: inline-block; }
+        .btn-text-mob { display: none; }
 
         /* Меню */
         .menu-container { display: flex; justify-content: flex-end; }
@@ -158,19 +162,19 @@
         .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
         section { padding-top: var(--section-padding); padding-bottom: var(--section-padding); }
 
-        /* HERO (ИСПРАВЛЕННЫЙ ДЛЯ ПК) */
+        /* HERO (ПК) */
         .hero { 
-            min-height: 90vh; /* Возвращаем нормальную высоту, не во весь экран */
+            min-height: 90vh; 
             display: flex; 
             flex-direction: column; 
             justify-content: center;
-            align-items: flex-start; /* Прижимаем влево */
+            align-items: flex-start; /* Влево */
             padding-top: 100px;
         }
 
         .hero-card { 
             padding: 70px; 
-            max-width: 900px; /* Ограничиваем ширину, чтобы была "маленькая плашка" */
+            max-width: 900px; 
             width: 100%;
             text-align: left; /* Текст слева */
         }
@@ -184,9 +188,23 @@
         
         .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--grid-gap); }
         .team-card { padding: 30px; text-align: center; display: flex; flex-direction: column; align-items: center;}
-        .photo { width: 100%; aspect-ratio: 1/1.25; border-radius: 30px; object-fit: cover; margin-bottom: 25px; background: rgba(0,0,0,0.05); }
-        .role { color: var(--accent); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
-        .name { font-size: 1.5rem; font-weight: 800; }
+        
+        /* Заглушка для фото */
+        .photo-placeholder { 
+            width: 100%; 
+            aspect-ratio: 1/1.25; 
+            border-radius: 30px; 
+            margin-bottom: 25px; 
+            background: rgba(0,0,0,0.06); /* Серый фон */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(0,0,0,0.1);
+            font-size: 3rem;
+        }
+
+        .role { color: var(--accent); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; }
+        .name { font-size: 1.4rem; font-weight: 800; }
         
         .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--grid-gap); }
         .pricing-card { padding: 50px; display: flex; flex-direction: column; justify-content: space-between; min-height: 500px; }
@@ -241,9 +259,9 @@
                 max-height: 100px; opacity: 1; margin: 5px 0;
             }
 
-            /* Кнопка Тарифы */
-            .notch-btn .logo-text-desktop { display: none; }
-            .notch-btn .logo-box-mobile { display: inline; }
+            /* Кнопка Тарифы (Смена текста) */
+            .btn-text-pc { display: none; }
+            .btn-text-mob { display: inline-block; }
             
             .notch-btn { height: 50px; padding: 0 25px; font-size: 0.85rem; }
             .menu-trigger { width: 50px; height: 50px; }
@@ -257,17 +275,16 @@
             .hero { 
                 min-height: auto;
                 height: auto;
-                align-items: center; /* Центруем карточку */
+                align-items: center; 
                 padding-top: 100px;
                 padding-bottom: 50px;
             }
             .hero-card { 
-                /* Делаем её такой же как service-card */
                 min-height: 450px; 
                 padding: 40px 20px; 
                 width: 100%;
-                text-align: center; /* Текст по центру */
-                align-items: center; /* Элементы по центру */
+                text-align: center; 
+                align-items: center;
             }
             
             h1 { 
@@ -302,8 +319,8 @@
         </div>
         <div class="header-item notch-container">
             <a href="#pricing" class="notch-btn">
-                <span class="logo-text-desktop">ВЫБРАТЬ ТАРИФ</span>
-                <span class="logo-box-mobile" style="display:inline;">ТАРИФЫ</span>
+                <span class="btn-text-pc">ВЫБРАТЬ ТАРИФ</span>
+                <span class="btn-text-mob">ТАРИФЫ</span>
             </a>
         </div>
         <div class="header-item menu-container">
@@ -355,24 +372,24 @@
         <h2>Команда</h2>
         <div class="team-grid">
             <div class="glass team-card hover-effect">
-                <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=600&q=80" class="photo" alt="Img">
-                <div class="role">Founder</div>
-                <div class="name">Alex</div>
+                <div class="photo-placeholder"></div>
+                <div class="role">Head SMM / Strategist</div>
+                <div class="name">Ирина</div>
             </div>
             <div class="glass team-card hover-effect">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" class="photo" alt="Img">
-                <div class="role">Creator</div>
-                <div class="name">Maria</div>
+                <div class="photo-placeholder"></div>
+                <div class="role">Content maker / Visualizer</div>
+                <div class="name">Дарья</div>
             </div>
             <div class="glass team-card hover-effect">
-                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80" class="photo" alt="Img">
+                <div class="photo-placeholder"></div>
                 <div class="role">Copywriter</div>
-                <div class="name">Max</div>
+                <div class="name">Дмитрий</div>
             </div>
             <div class="glass team-card hover-effect">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" class="photo" alt="Img">
-                <div class="role">Target</div>
-                <div class="name">Elena</div>
+                <div class="photo-placeholder"></div>
+                <div class="role">AI Creator / Web designer</div>
+                <div class="name">Александр</div>
             </div>
         </div>
     </section>
