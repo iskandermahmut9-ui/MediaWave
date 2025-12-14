@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEDIA WAVE | Final Corrected</title>
+    <title>MEDIA WAVE | Final Fixed</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -158,16 +158,21 @@
         .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
         section { padding-top: var(--section-padding); padding-bottom: var(--section-padding); }
 
-        /* HERO */
+        /* HERO (ИСПРАВЛЕННЫЙ ДЛЯ ПК) */
         .hero { 
-            height: 100vh;
-            display: flex; flex-direction: column; justify-content: center; 
-            padding: 0; 
+            min-height: 90vh; /* Возвращаем нормальную высоту, не во весь экран */
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+            align-items: flex-start; /* Прижимаем влево */
+            padding-top: 100px;
         }
+
         .hero-card { 
-            width: 100%; height: 85vh; margin-top: 20px;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 40px;
+            padding: 70px; 
+            max-width: 900px; /* Ограничиваем ширину, чтобы была "маленькая плашка" */
+            width: 100%;
+            text-align: left; /* Текст слева */
         }
 
         h1 { font-size: clamp(3.5rem, 6vw, 6.5rem); font-weight: 800; line-height: 1; margin-bottom: 40px; }
@@ -213,7 +218,6 @@
         }
 
         @media (max-width: 768px) {
-            /* Живой фон для мобильного */
             .blob { filter: blur(60px); opacity: 0.9; }
             .b1 { top: -5%; left: -20%; width: 90vw; height: 90vw; }
             .b2 { bottom: -5%; right: -20%; width: 90vw; height: 90vw; }
@@ -221,10 +225,9 @@
 
             header { padding: 0 15px; top: 15px; }
             
-            /* Смена логотипа на вертикальный */
+            /* Логотип */
             .logo-text-desktop { display: none; }
             .logo-box-mobile { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-            
             .logo-btn { 
                 width: 50px; min-height: 60px; padding: 15px 0; 
                 flex-direction: column; font-size: 0.9rem; letter-spacing: 0; font-weight: 700; line-height: 1;
@@ -238,7 +241,7 @@
                 max-height: 100px; opacity: 1; margin: 5px 0;
             }
 
-            /* Смена текста в кнопке тарифа */
+            /* Кнопка Тарифы */
             .notch-btn .logo-text-desktop { display: none; }
             .notch-btn .logo-box-mobile { display: inline; }
             
@@ -250,20 +253,21 @@
             
             .container { padding: 0 15px; }
             
-            /* Исправление высоты Hero для мобильных */
+            /* HERO ДЛЯ МОБИЛЬНОГО (По центру, узкая) */
             .hero { 
-                height: auto; /* Снимаем 100vh */
                 min-height: auto;
+                height: auto;
+                align-items: center; /* Центруем карточку */
                 padding-top: 100px;
                 padding-bottom: 50px;
             }
             .hero-card { 
-                height: auto; /* Снимаем 85vh */
-                min-height: 450px; /* Фикс высота, как у остальных карточек */
+                /* Делаем её такой же как service-card */
+                min-height: 450px; 
                 padding: 40px 20px; 
-                justify-content: center; 
                 width: 100%;
-                margin-top: 0;
+                text-align: center; /* Текст по центру */
+                align-items: center; /* Элементы по центру */
             }
             
             h1 { 
@@ -299,7 +303,7 @@
         <div class="header-item notch-container">
             <a href="#pricing" class="notch-btn">
                 <span class="logo-text-desktop">ВЫБРАТЬ ТАРИФ</span>
-                <span class="logo-box-mobile">ТАРИФЫ</span>
+                <span class="logo-box-mobile" style="display:inline;">ТАРИФЫ</span>
             </a>
         </div>
         <div class="header-item menu-container">
