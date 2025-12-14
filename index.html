@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEDIA WAVE | Final</title>
+    <title>MEDIA WAVE | Final Corrected</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,6 +89,7 @@
 
         .header-item { pointer-events: auto; }
 
+        /* Логотип */
         .logo-btn {
             display: inline-flex; justify-content: center; align-items: center;
             height: 60px; padding: 0 40px;
@@ -97,8 +98,12 @@
             letter-spacing: 3px; text-transform: uppercase;
             transition: all 0.4s ease;
         }
-        .logo-part-hidden { display: inline-block; }
+        
+        /* Скрываем мобильные элементы по умолчанию */
+        .logo-box-mobile { display: none; }
+        .logo-text-desktop { display: inline; }
 
+        /* Челка */
         .notch-container { display: flex; justify-content: center; }
         .notch-btn {
             background: var(--black-btn); color: white;
@@ -111,6 +116,7 @@
         }
         .notch-btn:hover { transform: scale(1.05); }
 
+        /* Меню */
         .menu-container { display: flex; justify-content: flex-end; }
         .menu-wrapper { position: relative; display: flex; flex-direction: column; align-items: flex-end; }
         
@@ -170,11 +176,13 @@
         /* СЕТКИ */
         .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gap); }
         .service-card { padding: 60px; min-height: 450px; display: flex; flex-direction: column; justify-content: flex-end; }
+        
         .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--grid-gap); }
         .team-card { padding: 30px; text-align: center; display: flex; flex-direction: column; align-items: center;}
         .photo { width: 100%; aspect-ratio: 1/1.25; border-radius: 30px; object-fit: cover; margin-bottom: 25px; background: rgba(0,0,0,0.05); }
         .role { color: var(--accent); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
         .name { font-size: 1.5rem; font-weight: 800; }
+        
         .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--grid-gap); }
         .pricing-card { padding: 50px; display: flex; flex-direction: column; justify-content: space-between; min-height: 500px; }
         .price-title { font-size: 1.5rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
@@ -197,8 +205,6 @@
         .f-btn:hover { background: white; transform: scale(1.05); }
 
         /* --- 6. МОБИЛЬНАЯ ВЕРСИЯ --- */
-        .logo-box-mobile { display: none; } 
-
         @media (max-width: 1200px) {
             .team-grid { grid-template-columns: 1fr 1fr; }
             .pricing-grid { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; }
@@ -207,14 +213,18 @@
         }
 
         @media (max-width: 768px) {
+            /* Живой фон для мобильного */
             .blob { filter: blur(60px); opacity: 0.9; }
             .b1 { top: -5%; left: -20%; width: 90vw; height: 90vw; }
             .b2 { bottom: -5%; right: -20%; width: 90vw; height: 90vw; }
             .b3 { top: 40%; left: 5%; width: 90vw; height: 90vw; }
 
             header { padding: 0 15px; top: 15px; }
+            
+            /* Смена логотипа на вертикальный */
             .logo-text-desktop { display: none; }
             .logo-box-mobile { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+            
             .logo-btn { 
                 width: 50px; min-height: 60px; padding: 15px 0; 
                 flex-direction: column; font-size: 0.9rem; letter-spacing: 0; font-weight: 700; line-height: 1;
@@ -227,6 +237,11 @@
             .logo-btn:hover .word-expand, .logo-btn:active .word-expand {
                 max-height: 100px; opacity: 1; margin: 5px 0;
             }
+
+            /* Смена текста в кнопке тарифа */
+            .notch-btn .logo-text-desktop { display: none; }
+            .notch-btn .logo-box-mobile { display: inline; }
+            
             .notch-btn { height: 50px; padding: 0 25px; font-size: 0.85rem; }
             .menu-trigger { width: 50px; height: 50px; }
             .dropdown-panel { width: 200px; }
@@ -234,9 +249,21 @@
             :root { --section-padding: 120px; }
             
             .container { padding: 0 15px; }
-            .hero { padding: 0; }
+            
+            /* Исправление высоты Hero для мобильных */
+            .hero { 
+                height: auto; /* Снимаем 100vh */
+                min-height: auto;
+                padding-top: 100px;
+                padding-bottom: 50px;
+            }
             .hero-card { 
-                height: 85vh; padding: 20px; justify-content: center; width: 100%;
+                height: auto; /* Снимаем 85vh */
+                min-height: 450px; /* Фикс высота, как у остальных карточек */
+                padding: 40px 20px; 
+                justify-content: center; 
+                width: 100%;
+                margin-top: 0;
             }
             
             h1 { 
@@ -272,7 +299,7 @@
         <div class="header-item notch-container">
             <a href="#pricing" class="notch-btn">
                 <span class="logo-text-desktop">ВЫБРАТЬ ТАРИФ</span>
-                <span class="logo-box-mobile" style="display:inline;">ТАРИФЫ</span>
+                <span class="logo-box-mobile">ТАРИФЫ</span>
             </a>
         </div>
         <div class="header-item menu-container">
