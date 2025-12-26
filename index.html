@@ -91,9 +91,9 @@
             position: absolute;
             border-radius: 50%;
             opacity: 0;
-            background: radial-gradient(120% 120% at 30% 30%, rgba(255, 255, 255, 0.1), transparent 70%);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: inset 0 0 10px var(--bubble-color), 0 0 10px rgba(255,255,255,0.2);
+            background: radial-gradient(120% 120% at 30% 30%, rgba(255, 255, 255, 0.2), transparent 70%); /* Чуть ярче центр (0.2) */
+            border: 1px solid rgba(255, 255, 255, 0.6); /* Чуть ярче обводка (0.6) для видимости */
+            box-shadow: inset 0 0 10px var(--bubble-color), 0 0 10px rgba(255,255,255,0.3);
             will-change: transform, opacity;
             animation: smoothRise linear forwards;
         }
@@ -103,7 +103,7 @@
             position: absolute;
             top: 15%; left: 18%; width: 25%; height: 12%;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95); /* Яркий блик */
             filter: blur(1px);
             transform: rotate(-45deg);
         }
@@ -347,19 +347,28 @@
         }
 
         @media (max-width: 768px) {
-            /* 1. БОЛЕЕ ПЛОТНЫЙ И ЯРКИЙ ФОН НА МОБАЙЛЕ */
+            /* БОЛЕЕ ЯРКИЙ ФОН */
             .blob { filter: blur(40px); opacity: 1; }
             .b1 { top: 0%; left: -10%; width: 70vw; height: 70vw; }
             .b2 { bottom: 10%; right: -10%; width: 70vw; height: 70vw; }
             .b3 { top: 40%; left: 20%; width: 60vw; height: 60vw; }
 
-            header { padding: 0 15px; top: 15px; }
-            .pc-only { display: none !important; } .mob-only { display: flex !important; }
-            .logo-btn { height: 50px; width: auto; }
+            /* --- 1. ШАПКА: ЛОГО СЛЕВА, МЕНЮ СПРАВА --- */
+            header {
+                padding: 0 15px; top: 15px;
+                display: flex; /* Flexbox для раскидывания по краям */
+                justify-content: space-between; 
+                align-items: center;
+                /* Сбрасываем Grid */
+                grid-template-columns: none; 
+            }
+            .header-item { width: auto; } /* Чтобы не занимали лишнее место */
             
-            /* 2. СКРЫВАЕМ КНОПКУ ТАРИФЫ В ШАПКЕ */
+            /* Скрываем кнопку "Тарифы" */
             .notch-container { display: none !important; }
 
+            .pc-only { display: none !important; } .mob-only { display: flex !important; }
+            .logo-btn { height: 50px; width: auto; }
             .menu-trigger { width: 50px; height: 50px; }
             .dropdown-panel { width: 200px; }
             :root { --section-padding: 120px; }
@@ -372,7 +381,7 @@
             .phone-btn { font-size: 1.4rem; padding: 15px 30px; width: 100%; }
             h2 { font-size: 2.2rem; }
             
-            /* Скрываем кастомный курсор на тач-устройствах */
+            /* Скрываем курсор */
             #cursor-follower { display: none !important; }
             body { cursor: auto; }
         }
@@ -597,13 +606,11 @@
         }
 
         // --- УМНЫЙ 3D НАКЛОН И ПУЗЫРЬКИ ---
-        // Общий список элементов для взаимодействия
         const interactElements = document.querySelectorAll('.hero-card, .service-card, .team-card, .pricing-card, .logo-btn, .extra-card, .phone-btn, .f-btn, .notch-btn');
 
-        // --- 1. ЛОГИКА ДЛЯ ДЕСКТОПА (МЫШЬ) ---
+        // --- 1. ЛОГИКА ДЛЯ ДЕСКТОПА ---
         if (window.innerWidth > 768) {
             interactElements.forEach(card => {
-                // Наклон
                 card.addEventListener('mousemove', (e) => {
                     const rect = card.getBoundingClientRect();
                     const x = e.clientX - rect.left; const y = e.clientY - rect.top;
@@ -614,7 +621,7 @@
                 });
                 card.addEventListener('mouseleave', () => { card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)'; });
                 
-                // Пузырьки по клику
+                // Клик для пузырьков на ПК
                 card.addEventListener('click', () => {
                     const rect = card.getBoundingClientRect();
                     for (let i = 0; i < 50; i++) { setTimeout(() => { createSoapBubble(rect); }, Math.random() * 200); }
@@ -622,42 +629,37 @@
             });
         }
 
-        // --- 2. ЛОГИКА ДЛЯ МОБАЙЛА (СКРОЛЛ / ВИРТУАЛЬНЫЙ СКАНЕР) ---
+        // --- 2. ЛОГИКА ДЛЯ МОБАЙЛА (АВТО-ПУЗЫРЬКИ КАЖДЫЕ 5 СЕК) ---
         if (window.innerWidth <= 768) {
             window.addEventListener('scroll', () => {
                 const viewportCenterY = window.innerHeight / 2;
-                
                 interactElements.forEach(card => {
                     const rect = card.getBoundingClientRect();
                     const cardCenterY = rect.top + rect.height / 2;
                     const distY = Math.abs(viewportCenterY - cardCenterY);
                     
-                    // Зона активации (центр экрана +/- 150px)
+                    // Эффект "виртуального наведения" при скролле
                     if (distY < 150) {
-                        // Эффект "наведения": наклон и увеличение
-                        // Вычисляем наклон в зависимости от положения в центре
                         const rotateX = (cardCenterY - viewportCenterY) / 20; 
                         card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) scale(1.03)`;
-                        
-                        // Рандомный запуск пузырьков (эффект кипения)
-                        // Шанс 3% на каждом событии скролла, чтобы не было спама
-                        if (Math.random() < 0.03) {
-                            createSoapBubble(rect);
-                        }
                     } else {
-                        // Сброс
                         card.style.transform = 'perspective(1000px) rotateX(0) scale(1)';
                     }
                 });
             });
-            
-            // Также оставляем клик для принудительного вызова пузырьков на мобилке
-            interactElements.forEach(card => {
-                card.addEventListener('click', () => {
+
+            // АВТОМАТИЧЕСКИЙ ЗАПУСК ПУЗЫРЬКОВ (КАЖДЫЕ 5 СЕК)
+            setInterval(() => {
+                interactElements.forEach(card => {
                     const rect = card.getBoundingClientRect();
-                    for (let i = 0; i < 20; i++) { setTimeout(() => { createSoapBubble(rect); }, Math.random() * 200); }
+                    // Запускаем по 5-8 пузырьков из каждой карточки
+                    for (let i = 0; i < 8; i++) {
+                        setTimeout(() => {
+                            createSoapBubble(rect);
+                        }, Math.random() * 1500); // Разброс по времени, чтобы не "залпом"
+                    }
                 });
-            });
+            }, 5000);
         }
 
         // --- ФУНКЦИЯ СОЗДАНИЯ ПУЗЫРЬКА ---
@@ -670,16 +672,13 @@
             const color = bubbleColors[Math.floor(Math.random() * bubbleColors.length)];
             bubble.style.setProperty('--bubble-color', color);
             
-            // Размер
             const size = Math.random() * 60 + 30; 
             bubble.style.width = size + 'px'; bubble.style.height = size + 'px';
             
-            // Позиция
             const startX = rect.left + Math.random() * rect.width;
             const startY = rect.top + Math.random() * rect.height;
             bubble.style.left = startX + 'px'; bubble.style.top = startY + 'px';
             
-            // Анимация
             const sway = (Math.random() - 0.5) * 200 + 'px';
             bubble.style.setProperty('--sway', sway);
             const duration = Math.random() * 3 + 3;
