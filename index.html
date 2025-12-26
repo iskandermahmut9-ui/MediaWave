@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MEDIA WAVE | Digital Agency</title>
     
+    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&display=swap" rel="stylesheet">
@@ -283,6 +289,17 @@
         .price-btn { display: block; text-align: center; padding: 18px; border-radius: 100px; text-decoration: none; font-weight: 700; background: rgba(0,0,0,0.05); color: var(--text-main); transition: 0.3s; }
         .price-btn:hover { background: var(--black-btn); color: white; }
 
+        /* ДОП УСЛУГИ (СПИСОК) */
+        .extra-list li {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 15px;
+        }
+        .extra-list li:last-child { border: none; margin-bottom: 0; }
+        .service-info { text-align: left; }
+        .service-name { display: block; font-size: 1.2rem; font-weight: 700; margin-bottom: 5px; }
+        .service-note { display: block; font-size: 0.9rem; color: var(--text-muted); }
+        .service-price { font-size: 1.2rem; font-weight: 800; color: var(--accent); white-space: nowrap; margin-left: 20px; }
+
         /* Футер */
         footer { padding-bottom: 100px; text-align: center; }
         .phone-btn {
@@ -312,6 +329,8 @@
             .pricing-card { min-height: auto; }
             .extra-services-grid { grid-template-columns: 1fr; }
             .logo-btn { padding: 0; } 
+            .extra-list li { flex-direction: column; align-items: flex-start; }
+            .service-price { margin-left: 0; margin-top: 10px; }
         }
 
         @media (max-width: 768px) {
