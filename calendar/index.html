@@ -4,14 +4,25 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/calendar/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <title>celender-mw</title>
-    <script type="module" crossorigin src="/calendar/assets/index-CDhClYei.js"></script>
+    <title>MediaWave Calendar</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mobile-drag-drop@2.3.0-rc.2/default.css">
+    <script type="module" crossorigin src="/calendar/assets/index-C2dHtIEW.js"></script>
     <link rel="stylesheet" crossorigin href="/calendar/assets/index-DMxcmqxY.css">
   </head>
   <body>
     <div id="root"></div>
-  </body>
+
+    <script src="https://cdn.jsdelivr.net/npm/mobile-drag-drop@2.3.0-rc.2/index.min.js"></script>
+    <script>
+      // Эта настройка включает поддержку касаний
+      MobileDragDrop.polyfill({
+        // Сила удержания пальца перед началом перетаскивания (чтобы не путать со скроллом)
+        holdToDrag: 200, 
+        dragImageTranslateOverride: 0
+      });
+      
+      // Исправление для скролла на iOS во время перетаскивания
+      document.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
+    </script>
+    </body>
 </html>
