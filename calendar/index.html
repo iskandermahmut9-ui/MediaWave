@@ -1,28 +1,74 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/calendar/vite.svg" />
+    
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/calendar/favicon.svg" />
+    <link rel="shortcut icon" href="/calendar/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MediaWave Calendar</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mobile-drag-drop@2.3.0-rc.2/default.css">
-    <script type="module" crossorigin src="/calendar/assets/index-DfaAgoXs.js"></script>
-    <link rel="stylesheet" crossorigin href="/calendar/assets/index-1-e2I95i.css">
+    <title>Smart Calendar | Media Wave</title>
+    
+    <style>
+      /* Кнопка "Вернуться" - видна только на ПК */
+      .back-to-site {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 9999;
+        text-decoration: none;
+        color: #1d1d1f;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 12px 25px;
+        border-radius: 30px;
+        font-family: system-ui, -apple-system, sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .back-to-site:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      }
+
+      /* Стрелочка назад */
+      .arrow-icon {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+
+      /* Скрываем на мобильных (меньше 768px) */
+      @media (max-width: 768px) {
+        .back-to-site {
+          display: none;
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="/calendar/assets/index-Cuk6vPRT.js"></script>
+    <link rel="stylesheet" crossorigin href="/calendar/assets/index-CBkRItny.css">
   </head>
   <body>
-    <div id="root"></div>
+    
+    <a href="https://media-w.ru/#ai-tools" class="back-to-site">
+      <svg class="arrow-icon" viewBox="0 0 24 24">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+      </svg>
+      Вернуться на сайт
+    </a>
 
-    <script src="https://cdn.jsdelivr.net/npm/mobile-drag-drop@2.3.0-rc.2/index.min.js"></script>
-    <script>
-      // Эта настройка включает поддержку касаний
-      MobileDragDrop.polyfill({
-        // Сила удержания пальца перед началом перетаскивания (чтобы не путать со скроллом)
-        holdToDrag: 200, 
-        dragImageTranslateOverride: 0
-      });
-      
-      // Исправление для скролла на iOS во время перетаскивания
-      document.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
-    </script>
-    </body>
+    <div id="root"></div>
+    
+  </body>
 </html>
