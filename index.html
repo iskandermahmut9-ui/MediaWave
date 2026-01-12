@@ -361,6 +361,36 @@
         .service-note { display: block; font-size: 0.9rem; color: var(--text-muted); }
         .service-price { font-size: 1.2rem; font-weight: 800; color: var(--accent); white-space: nowrap; margin-left: 20px; }
 
+        /* --- НОВАЯ КНОПКА: УМНЫЕ ПОМОЩНИКИ --- */
+        .ai-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+            padding: 35px; /* Невысокая, но воздушная */
+            text-decoration: none;
+            color: var(--text-main);
+            margin-bottom: 50px;
+            transition: transform 0.3s;
+        }
+
+        .ai-title {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 800;
+            margin-bottom: 5px;
+            background: linear-gradient(45deg, var(--text-main), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ai-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
         /* Футер */
         footer { padding-bottom: 100px; text-align: center; }
         .phone-btn {
@@ -428,6 +458,9 @@
             .phone-btn { font-size: 1.4rem; padding: 15px 30px; width: 100%; }
             h2 { font-size: 2.2rem; }
             
+            /* На мобильном чуть уменьшим отступы у новой кнопки */
+            .ai-card { padding: 25px; }
+
             /* Скрываем курсор */
             #cursor-follower { display: none !important; }
             body { cursor: auto; }
@@ -465,11 +498,11 @@
                     <div class="menu-icon"><span></span><span></span></div>
                 </div>
                 <nav class="glass dropdown-panel">
-                    <a href="#cases" class="menu-link">Кейсы</a>
-                    <a href="#team" class="menu-link">Команда</a>
-                    <a href="#pricing" class="menu-link">Цены</a>
-                    <a href="#contacts" class="menu-link">Контакты</a>
-                </nav>
+    <a href="#cases" class="menu-link">Кейсы</a>
+    <a href="#team" class="menu-link">Команда</a>
+    <a href="#pricing" class="menu-link">Цены</a>
+    <a href="#ai-tools" class="menu-link">Умные помощники</a> <a href="#contacts" class="menu-link">Контакты</a>
+</nav>
             </div>
         </div>
     </header>
@@ -611,6 +644,15 @@
         </div>
     </section>
 
+   <section id="ai-tools" class="container" style="padding-top: 0;">
+        <h2 style="margin-bottom: 40px;">Умные помощники</h2>
+        
+        <a href="https://media-w.ru/calendar/" class="glass ai-card hover-effect">
+            <span class="ai-title">Ежедневник + Метод Помидора</span>
+            <span class="ai-desc">Пока бесплатный инструмент для фокусировки и планирования</span>
+        </a>
+    </section>
+
     <footer id="contacts" class="container">
         <h2 style="margin-bottom: 40px;">Связаться с нами</h2>
         <a href="tel:+79150469053" class="phone-btn">+7 (915) 046-90-53</a>
@@ -649,7 +691,8 @@
         document.addEventListener('mouseup', () => cursor.classList.remove('active'));
 
         // --- УМНЫЙ 3D НАКЛОН ---
-        const cards = document.querySelectorAll('.hero-card, .service-card, .team-card, .pricing-card, .logo-btn, .extra-card');
+        // Добавил .ai-card в список
+        const cards = document.querySelectorAll('.hero-card, .service-card, .team-card, .pricing-card, .logo-btn, .extra-card, .ai-card');
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
@@ -666,7 +709,8 @@
         const bubbleLayer = document.getElementById('bubble-layer');
         const bubbleColors = ['rgba(168, 192, 255, 0.7)', 'rgba(255, 194, 209, 0.7)', 'rgba(224, 195, 252, 0.7)', 'rgba(0, 122, 255, 0.5)', 'rgba(255, 255, 255, 0.6)'];
         document.addEventListener('click', function(e) {
-            const target = e.target.closest('.glass, a, button, .price-btn, .phone-btn, .f-btn, .notch-btn, .logo-btn, .pricing-card, .team-card, .service-card, .extra-card');
+            // Добавил .ai-card сюда тоже, чтобы при клике шли пузыри
+            const target = e.target.closest('.glass, a, button, .price-btn, .phone-btn, .f-btn, .notch-btn, .logo-btn, .pricing-card, .team-card, .service-card, .extra-card, .ai-card');
             if (target) {
                 const rect = target.getBoundingClientRect();
                 for (let i = 0; i < 50; i++) { setTimeout(() => { createSoapBubble(rect); }, Math.random() * 200); }
